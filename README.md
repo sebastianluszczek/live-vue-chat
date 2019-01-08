@@ -1,7 +1,8 @@
-# smoothies
+# Live VueJS Chat
 
-> Vue.js and Firebase application working as live chat.
-> In future there will be authentication (passportJS).
+Vue.js and Firebase application working as live chat.
+
+In future there will be authentication (passportJS).
 
 ---
 
