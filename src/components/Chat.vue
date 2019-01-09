@@ -3,27 +3,52 @@
     <h2 class="teal-text">Live Vue Chat</h2>
     <div class="card">
       <div class="card-content">
-        <ul class="messages left-align">
-          <li>
-            <span class="teal-text">Name</span>
-            <span class="grey-text text-darken-3">Message</span>
-            <span class="grey-text time">Time</span>
+        <ul class="messages left-align" v-chat-scroll>
+          <li v-for="message in messages" v-bind:key="message.id">
+            <span class="teal-text">{{message.name}}</span>
+            <span class="grey-text text-darken-3">{{message.content}}</span>
+            <span class="grey-text time">{{message.timestamp}}</span>
           </li>
         </ul>
       </div>
       <div class="card-action">
-        <input type="text">
+        <NewMessage v-bind:name="name"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import NewMessage from "@/components/NewMessage";
+import db from "@/firebase/init";
+import moment from 'moment';
 export default {
   name: "Chat",
   props: ["name"],
+  components: {
+    NewMessage
+  },
   data() {
-    return {};
+    return {
+      messages: []
+    };
+  },
+  created() {
+    let ref = db.collection("messages").orderBy("timestamp");
+
+    ref.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type == "added") {
+          let doc = change.doc;
+          this.messages.push({
+            id: doc.id,
+            name: doc.data().name,
+            content: doc.data().content,
+            timestamp: moment(doc.data().timestamp).format('lll')
+          });
+        }
+      });
+    });
   }
 };
 </script>
@@ -39,6 +64,22 @@ export default {
 .chat .time {
   display: block;
   font-size: 1em;
+}
+.messages {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.messages::-webkit-scrollbar {
+  width: 3px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background: #aaa;
 }
 </style>
 

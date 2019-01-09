@@ -6,7 +6,7 @@ In future there will be authentication (passportJS).
 
 ---
 
-### In project i use:
+### In project i used:
 
 <p style="float: left">
 <img src="./icons/vuejs.png" alt="Vue.js" width="64" style="display: inline">
