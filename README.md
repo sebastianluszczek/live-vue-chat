@@ -18,6 +18,13 @@ In future there will be authentication (passportJS).
 
 ---
 
+
+### Projest hosted on Firebase Hosting platform:
+
+[Live VueJS Chat](https://live-vuejs-chat.firebaseapp.com/)
+
+---
+
 ### Build Setup
 
 ```bash
